@@ -8,6 +8,8 @@
     </li>
   </transition-group>
 </template>
+
+
 <script setup>
 import { computed } from 'vue';
 
@@ -35,6 +37,7 @@ const selected = computed({
   scroll-behavior: smooth;
   padding: 5px;
   height: 100%;
+  font-size:30px;
 }
 label {
   cursor: pointer;

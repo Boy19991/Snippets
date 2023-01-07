@@ -1,20 +1,36 @@
 <template>
+
   <div class="editor-tools">
+
     <div class="m-button">
+
+      <u-button variant="circle" @click="$emit('navigation:toggle')" ariaLabel="Menu">
+        <u-icon name="menu" />
+      </u-button>
+
       <u-button variant="circle" @click="$emit('snippet:close')" ariaLabel="Close Snippet">
         <u-icon name="left-small" />
       </u-button>
     </div>
+
     <u-input
       v-model="snippet.title"
       variant="invisible"
       name="title"
       class="snippet-title"
       @blur="snippet.title = snippet.title.length === 0 ? 'Untitled' : snippet.title"
+      @click="snippet.title = snippet.title === 'Untitled' ? '' : snippet.title"
     />
+    <!--
+      
+      
+    snippet.title = snippet.title.length === 0 ? '' : snippet.title
+    -->
+
     <u-button variant="circle" @click="preview = !preview" v-if="isMarkdown">
       <u-icon :name="preview ? 'eye-off' : 'eye'" />
     </u-button>
+
     <u-button
       variant="circle"
       @click="snippet.favorite = Number(!snippet.favorite)"
@@ -22,14 +38,22 @@
     >
       <u-icon :name="snippet.favorite ? 'heart' : 'heart-empty'" />
     </u-button>
+
     <u-button variant="circle" @click="$emit('snippet:delete', snippet)" ariaLabel="Delete Snippet">
       <u-icon name="trash-empty" />
     </u-button>
+
   </div>
+
+
   <div class="tag-list">
     <u-tag-input :max="5" placeholder="Enter a tag" v-model="snippet.tags" />
   </div>
+
+
   <markdown-preview :source="snippet.code" v-if="isMarkdown && preview" />
+  
+  
   <code-mirror
     v-model="snippet.code"
     :language="language"
@@ -37,6 +61,8 @@
     @state="handleState"
     v-else
   />
+
+
   <ul class="status-bar">
     <li>
       <u-button @click="modal.open()" ariaLabel="Language mode">
@@ -47,13 +73,17 @@
     <li>Length: {{ state.length }}</li>
     <li>Selected: {{ state.selected }}</li>
   </ul>
+
+
   <u-modal ref="modal">
     <template #header> Language mode </template>
     <template #body>
       <language-mode :items="languages" v-model="snippet.language" @change="modal.close()" />
     </template>
   </u-modal>
+  
 </template>
+
 <script setup>
 import { computed, ref, watch } from 'vue';
 import CodeMirror from '@/components/app/editor/CodeMirror.vue';
@@ -62,6 +92,10 @@ import LanguageMode from '@/components/app/editor/LanguageMode.vue';
 import { languages } from '@/helpers/languages';
 import { githubLight } from '@ddietr/codemirror-themes/theme/github-light';
 import { githubDark } from '@ddietr/codemirror-themes/theme/github-dark';
+
+
+
+
 
 const emit = defineEmits(['snippet:close', 'snippet:delete', 'update:modelValue']);
 const props = defineProps({
@@ -101,6 +135,14 @@ watch(
   },
   { immediate: true }
 );
+
+/*
+const test = () => {
+  console.log(snippet.value.title.length)
+  snippet.value.title = snippet.value.title.length === 0 ? 'Untitled' : snippet.value.title 
+}
+*/
+
 </script>
 <style scoped>
 .status-bar {
@@ -122,7 +164,7 @@ watch(
   padding: 5px;
 }
 .snippet-title {
-  font-size: 16px;
+  font-size: 36px;
   width: 75%;
   color: var(--editor-title-color);
 }

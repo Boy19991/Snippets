@@ -1,35 +1,86 @@
 <template>
-  <aside class="left-block" :class="{ active: sidebar }">
-    <main-navigation :items="menu" v-model="conditions.snippets" />
-    <tag-navigation :items="tags" v-model="conditions.tags" />
-    <section class="app-tools">
-      <u-button variant="circle" ariaLabel="Theme" @click="globalState.toggleTheme()">
-        <u-icon :name="globalState.getTheme() === 'light' ? 'moon-inv' : 'sun-inv'" />
+
+<div id="top">
+  
+      <!--
+      <u-button @click="$emit('update:sort', sort === 'desc' ? 'asc' : 'desc')" ariaLabel="Sort">
+        <u-icon :name="sort === 'desc' ? 'sort-alt-down' : 'sort-alt-up'" />
       </u-button>
-      <u-button variant="circle" @click="openGitHub()"><u-icon name="github" /></u-button>
+      -->
+      <u-input
+          type="text"
+          :value="term"
+          @input="conditions.term = $event.target.value"
+          name="term"
+          placeholder=""
+          style="width:200px;"
+          variant="button"
+      />
+
+     <button variant="circle" @click="sidebar = !sidebar" ariaLabel="Menu">
+      <!--<u-icon name="menu" />-->
+      hide nav
+    </button>
+
+    <button variant="circle" @click="createSnippet" ariaLabel="New Snippet">
+      <!--<u-icon name="list-add" />-->
+      create
+    </button>
+
+
+
+    <!--
+    <u-button variant="circle" ariaLabel="Theme" @click="globalState.toggleTheme()">
+      <u-icon :name="globalState.getTheme() === 'light' ? 'moon-inv' : 'sun-inv'" />
+    </u-button>
+-->
+
+</div>
+
+<div id="main">
+    <aside class="left-block" :class="{ active: sidebar }">
+
+      <main-navigation :items="menu" v-model="conditions.snippets" />
+
+      <tag-navigation :items="tags" v-model="conditions.tags" />
+
+      <!--
+      <section class="app-tools">
+        <u-button variant="circle" ariaLabel="Theme" @click="globalState.toggleTheme()">
+          <u-icon :name="globalState.getTheme() === 'light' ? 'moon-inv' : 'sun-inv'" />
+        </u-button>
+        <u-button variant="circle" @click="openGitHub()"><u-icon name="github" /></u-button>
+      </section>
+      -->
+    </aside>
+
+
+    <section class="middle-block" :class="{ hide: snippet }">
+
+      <snippet-tools      
+        v-model:sort="conditions.sort"
+      />
+
+      <u-scroll @scroll:end="paginate" :limit="100" ref="scroll">
+        <snippet-list :items="snippets" @snippets:delete="deleteSnippet" v-model:selected="snippet" />
+      </u-scroll>
+
     </section>
-  </aside>
-  <section class="middle-block" :class="{ hide: snippet }">
-    <snippet-tools
-      v-model:sort="conditions.sort"
-      v-model:term="conditions.term"
-      @snippet:create="createSnippet"
-      @navigation:toggle="sidebar = !sidebar"
-    />
-    <u-scroll @scroll:end="paginate" :limit="100" ref="scroll">
-      <snippet-list :items="snippets" @snippets:delete="deleteSnippet" v-model:selected="snippet" />
-    </u-scroll>
-  </section>
-  <section class="right-block" :class="{ hide: !snippet }">
-    <code-editor
-      v-model="snippet"
-      :theme="globalState.getTheme()"
-      @snippet:delete="deleteSnippet"
-      @snippet:close="snippet = false"
-      v-if="snippet"
-    />
-  </section>
-  <u-notify />
+
+
+    <section class="right-block" :class="{ hide: !snippet }">
+
+      <code-editor
+        v-model="snippet"
+        :theme="globalState.getTheme()"
+        @snippet:delete="deleteSnippet"
+        @snippet:close="snippet = false"
+        v-if="snippet"
+      />
+    </section>
+    <u-notify />
+
+  </div>
 </template>
 
 <script setup>
@@ -110,7 +161,6 @@ const paginate = async (skip) => {
   }
 };
 
-const openGitHub = () =>  window.open('https://github.com/dd3v/snippets.ninja', '_blank');
 
 watch(
   snippet,
@@ -165,10 +215,25 @@ body {
   background: var(--body-bg);
 }
 
-#app {
-  display: flex;
+#top {
+  display:flex;
+  height:50px;
+  width:100%;
+  padding:10px 20px;
+  flex-flow:row-reverse;
+  gap:10px;
+}
+button, .button {
+  font-size:32px;
+  background-color: #202020;
+  border:0;
+  color:gray;
+}
+#main {
   height: 100%;
   width: 100%;
+  padding:10px;
+  display:flex;
 }
 
 .left-block {
@@ -203,6 +268,7 @@ body {
   height: 100%;
   overflow: hidden;
   background: var(--body-bg);
+  padding-right:20px;
 }
 
 .app-tools {

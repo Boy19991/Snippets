@@ -1,12 +1,14 @@
 <template>
   <div class="main-navigation-wrapper" v-show="show">
     <ul class="main-navigation">
+
       <li v-for="(menu, key) in items" :key="key" :class="{ active: selected == menu.value }">
         <label :for="menu.value">
           <input type="radio" name="menu" :id="menu.value" :value="menu.value" v-model="selected" />
           <span><u-icon :name="menu.icon" /> {{ menu.label }}</span>
         </label>
       </li>
+      
     </ul>
   </div>
 </template>
@@ -39,6 +41,7 @@ const selected = computed({
   padding: 0;
   margin: 0;
   padding: 5px;
+  display:none;
 }
 
 span {

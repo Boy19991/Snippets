@@ -2,17 +2,18 @@
   <div class="snippet">
     <div class="snippet-content">
       <span>
-        <u-icon
+        <!--<u-icon
           :color="snippet.favorite ? 'var(--like-color)' : ''"
           :name="snippet.favorite ? 'heart' : 'heart-empty'"
         />
+        -->
         <span v-if="title">{{ title }}</span>
         <span class="italic-text" v-else>Untitled</span>
       </span>
     </div>
     <div class="snippet-content text-small">
-      <span><u-icon name="code" /> {{ snippet.language }}</span>
-      <span>{{ datetime }}</span>
+      <!--<span><u-icon name="code" /> {{ snippet.language }}</span>-->
+      <span style="display:none">{{ datetime }}</span>
     </div>
   </div>
 </template>
@@ -36,6 +37,7 @@ const title = computed(() =>
   color: inherit;
   margin: 5px 0px 5px 0px;
   padding: 1px 5px 1px 5px;
+  font-size:26px
 }
 
 .snippet-content {
@@ -44,7 +46,7 @@ const title = computed(() =>
 }
 
 .text-small {
-  font-size: 12px;
+  font-size: 20px;
 }
 
 .italic-text {

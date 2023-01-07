@@ -38,6 +38,8 @@ const css = computed(() => {
       return 'invisible-input';
     case 'default':
       return 'default-input';
+    case 'button':
+      return 'button';
     default:
       return 'default-input';
   }
@@ -47,15 +49,25 @@ const inputValue = computed({
   set: (value) => emit('update:modelValue', value),
 });
 </script>
+
+
 <style scoped>
+
+
 input[type='text'],
 input[type='password'],
 input[type='search'] {
   width: 100%;
   box-sizing: border-box;
   font-family: inherit;
+  font-size:32px;
 }
 
+.button {
+  font-size:32px;
+  border:1px solid #202020;
+  border-radius: 30px;
+}
 .invisible-input {
   background: transparent;
   border: none;

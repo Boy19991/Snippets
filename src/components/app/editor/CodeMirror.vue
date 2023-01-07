@@ -92,5 +92,6 @@ onMounted(() => {
 #editor {
   height: 100%;
   overflow: auto;
+  font-size:30px
 }
 </style>

@@ -9,6 +9,7 @@
       @click="$emit('update:selected', snippet)"
     >
       <snippet-item :snippet="snippet" />
+      
     </li>
   </transition-group>
 </template>

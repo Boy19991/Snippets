@@ -23,7 +23,7 @@ button {
   background-color: inherit;
   cursor: pointer;
   display: inline-block;
-  padding: 0;
+  padding: 10px;
   font-size: inherit;
   color: var(--btn-color);
 }
@@ -38,7 +38,7 @@ button:disabled {
 button.default {
   border-radius: 5px;
   border: var(--btn-border);
-  padding: 8px;
+  padding: 18px;
 }
 button.default:hover {
   border: var(--btn-hover-border);
@@ -50,7 +50,7 @@ button.circle {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  padding: 3px;
+  padding: 23px;
   border: var(--btn-border);
 }
 
